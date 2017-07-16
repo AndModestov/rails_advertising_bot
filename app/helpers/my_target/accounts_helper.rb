@@ -1,0 +1,2 @@
+module MyTarget::AccountsHelper
+end

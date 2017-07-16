@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title Advertising Bot
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true 
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true 
+    = csrf_meta_tags
+    = action_cable_meta_tag
+  body
+    = render 'layouts/header'
+    .container
+      = bootstrap_flash  
+      = yield

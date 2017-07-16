@@ -1,0 +1,16 @@
+table.table
+  thead
+    tr
+      th Name:
+      th Login:
+      th Password:
+      th Link:
+      th Status
+      th
+      th
+  tbody
+    = render 'account_data', account: @account
+    
+a.new-account-link.btn.btn-primary Edit Account
+br
+= render 'form', account: @account, method: 'patch'

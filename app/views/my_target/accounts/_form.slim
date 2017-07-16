@@ -1,0 +1,8 @@
+.account_form
+  = form_for account, remote: true, method: method do |f|
+    .account-errors
+    = f.text_field :name, placeholder: 'Name'
+    = f.text_field :login, placeholder: 'Login'
+    = f.text_field :password, placeholder: 'Password'
+    = f.text_field :link, placeholder: 'Link'
+    = f.submit 'Save', class: 'btn btn-primary'

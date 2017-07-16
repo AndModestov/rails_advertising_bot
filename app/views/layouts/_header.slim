@@ -1,0 +1,12 @@
+header.navbar.navbar-fixed-top.navbar-inverse
+  .navbar-inner
+    = link_to "Advertising Bot", root_path, id: "logo"
+    nav
+      ul.nav.nav-pills.pull-right
+        li = link_to "MyTarget Accounts", root_path
+        li#fat-menu.dropdown
+          a.dropdown-toggle data-toggle="dropdown" href=""
+            | Settings
+            b.caret
+          ul.dropdown-menu
+            li = link_to "Settings", '#'

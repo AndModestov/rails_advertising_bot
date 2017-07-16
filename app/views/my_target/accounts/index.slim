@@ -1,0 +1,20 @@
+h2 MyTarget Accounts:
+br
+   
+table.table
+  thead
+    tr
+      th Name:
+      th Login:
+      th Password:
+      th Link:
+      th Status:
+      th
+      th
+  tbody.accounts 
+    - @accounts.each do |acc|
+      = render 'account_data', account: acc
+      
+a.new-account-link.btn.btn-primary New Account
+br
+= render 'form', account: MyTarget::Account.new, method: 'post'
