@@ -1,5 +1,5 @@
 class MyTarget::AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :update, :destroy]
+  before_action :set_account, only: [:show, :update, :destroy, :synchronize]
 
   def index
     @accounts = MyTarget::Account.all
@@ -11,7 +11,7 @@ class MyTarget::AccountsController < ApplicationController
   def create
     @account = MyTarget::Account.new(account_params)
     if @account.save
-      publish_account 'create'
+      ActionCablePublisher.publish_account('create', @account.id)
     else
       render_errors
     end
@@ -19,7 +19,7 @@ class MyTarget::AccountsController < ApplicationController
 
   def update
     if @account.update(account_params)
-      publish_account 'update'
+      ActionCablePublisher.publish_account('update', @account.id)
     else
       render_errors
     end
@@ -27,7 +27,11 @@ class MyTarget::AccountsController < ApplicationController
 
   def destroy
     @account.destroy
-    publish_account 'delete'
+    ActionCablePublisher.publish_account('delete', @account.id)
+  end
+
+  def synchronize
+    SynchronizeAccountJob.perform_later(@account.id)
   end
 
 
@@ -35,18 +39,6 @@ class MyTarget::AccountsController < ApplicationController
 
   def render_errors
     render json: @account.errors.full_messages, status: :unprocessable_entity
-  end
-
-  def publish_account action
-    ActionCable.server.broadcast(
-      'accounts',
-      id: @account.id,
-      action: action,
-      account: ApplicationController.render(
-        partial: 'my_target/accounts/account_data',
-        locals: { account: @account }
-      )
-    )
   end
 
   def set_account

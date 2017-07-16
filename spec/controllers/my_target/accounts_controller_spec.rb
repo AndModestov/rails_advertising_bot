@@ -39,8 +39,7 @@ RSpec.describe MyTarget::AccountsController, type: :controller do
       end
 
       it 'publishes account to /accounts' do
-        expect(ActionCable.server).to receive(:broadcast)
-                                      .with('accounts', { id: anything, action: 'create', account: anything })
+        expect(ActionCablePublisher).to receive(:publish_account).with('create', anything)
         post :create, params: { my_target_account: attributes_for(:my_target_account) }, format: :js
       end
     end
@@ -82,8 +81,7 @@ RSpec.describe MyTarget::AccountsController, type: :controller do
       end
 
       it 'publishes account to /accounts' do
-        expect(ActionCable.server).to receive(:broadcast)
-                                      .with('accounts', { id: account.id, action: 'update', account: anything })
+        expect(ActionCablePublisher).to receive(:publish_account).with('update', account.id)
         patch :update, params: { id: account, my_target_account: attributes_for(:my_target_account) }, format: :js
       end
     end
@@ -120,8 +118,7 @@ RSpec.describe MyTarget::AccountsController, type: :controller do
     end
 
     it 'publishes account to /accounts' do
-      expect(ActionCable.server).to receive(:broadcast)
-                                    .with('accounts', { id: account.id, action: 'delete', account: anything })
+      expect(ActionCablePublisher).to receive(:publish_account).with('delete', account.id)
       delete :destroy, params: { id: account }, format: :js
     end
   end

@@ -15,5 +15,10 @@ RSpec.describe MyTarget::Account, type: :model do
       account.set_status 'synchronization in progress'
       expect(account.status).to eq 'synchronization in progress'
     end
+
+    it 'should publish account to channel' do
+      expect(ActionCablePublisher).to receive(:publish_account).with('update', account.id)
+      account.set_status 'synchronization in progress'
+    end
   end
 end

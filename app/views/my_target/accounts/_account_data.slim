@@ -6,4 +6,5 @@ tr id="account-#{account.id}"
   td = account.status
   td = link_to 'delete', my_target_account_path(account), class: 'btn btn-primary', method: 'delete',
                                                           data: {confirm: "Sure?"}, remote: true
-  td = link_to 'sync', '#', class: 'btn btn-primary', method: 'patch', remote: true
+  td = link_to 'sync', synchronize_my_target_account_path(account), class: 'btn btn-primary',
+                                                               method: 'patch', remote: true
