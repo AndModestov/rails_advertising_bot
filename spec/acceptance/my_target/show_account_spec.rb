@@ -10,6 +10,7 @@ feature 'Visitor can see account' do
     expect(page).to have_selector('td', text: account.login)
     expect(page).to have_selector('td', text: account.password)
     expect(page).to have_selector('td', text: account.link)
+    expect(page).to have_selector('td', text: account.status)
 
     expect(page).to have_selector('a.new-account-link', text: 'Edit Account')
   end

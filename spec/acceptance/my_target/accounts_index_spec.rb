@@ -13,8 +13,9 @@ feature 'Visitor can watch the accounts list' do
       expect(page).to have_selector('td', text: acc.login)
       expect(page).to have_selector('td', text: acc.password)
       expect(page).to have_selector('td', text: acc.link)
+      expect(page).to have_selector('td', text: acc.status)
     end
-    
+
     expect(page).to have_selector('a.btn.btn-primary', text: 'delete', count: 3)
   end
 end
