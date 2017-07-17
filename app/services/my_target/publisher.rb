@@ -3,7 +3,7 @@ class MyTarget::Publisher
   MAIN_HOST = 'target.my.com'
   MAIN_URL = "https://#{MAIN_HOST}/"
   USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36'
-  FORMAT_IDS = [10465, 6124, 16674]
+  FORMAT_IDS = [28444, 6124, 16673]
 
   attr_reader :user_login, :password, :pad_url, :cookies
 
