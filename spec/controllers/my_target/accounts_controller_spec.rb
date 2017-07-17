@@ -110,6 +110,19 @@ RSpec.describe MyTarget::AccountsController, type: :controller do
   end
 
 
+  describe 'PATCH #synchronize' do
+    it 'assigns the requested account to @account' do
+      patch :synchronize, params: { id: account }, format: :js
+      expect(assigns(:account)).to eq account
+    end
+
+    it 'calls SynchronizeAccountJob' do
+      expect(SynchronizeAccountJob).to receive(:perform_later).with(account.id)
+      patch :synchronize, params: { id: account }, format: :js
+    end
+  end
+
+
   describe 'DELETE #destroy' do
     it 'deletes account' do
       expect{

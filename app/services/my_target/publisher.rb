@@ -3,6 +3,7 @@ class MyTarget::Publisher
   MAIN_HOST = 'target.my.com'
   MAIN_URL = "https://#{MAIN_HOST}/"
   USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36'
+  FORMAT_IDS = [10465, 6124, 16674]
 
   attr_reader :user_login, :password, :pad_url, :cookies
 
@@ -45,10 +46,9 @@ class MyTarget::Publisher
     }.to_json
 
     result = Request.run url, { method: :post, body: body, headers: headers }
-    MyTarget::Logger.debug 'CreatePad', result
     raise E::RequestError if result[:status] != 200
 
-    result
+    parse_pads result[:body]
   end
 
 
@@ -151,7 +151,7 @@ class MyTarget::Publisher
     (1..3).collect do |i|
       {
         "description" => "AwesomePlacement-#{i}",
-        "format_id" => 6124,
+        "format_id" => FORMAT_IDS[i-1],
         "filters" => {
           "deny_mobile_android_category" => [],"deny_mobile_category" =>[],
           "deny_topics" => [],"deny_pad_url" => [],"deny_mobile_apps" => []
@@ -162,6 +162,16 @@ class MyTarget::Publisher
         "shows_interval" => nil
       }
     end
+  end
+
+  def parse_pads pad_data
+    app = { name: pad_data['description'], service_id: pad_data['id'] }
+    addunits = pad_data['pads'].collect do |addunit|
+      { name: addunit['description'], service_id: addunit['id'], format: addunit['format_id'] }
+    end
+    result = { app: app, addunits: addunits }
+    MyTarget::Logger.debug 'CreatePad', result
+    result
   end
 
   def add_cookies data={}

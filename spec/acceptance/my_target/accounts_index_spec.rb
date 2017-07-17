@@ -17,5 +17,6 @@ feature 'Visitor can watch the accounts list' do
     end
 
     expect(page).to have_selector('a.btn.btn-primary', text: 'delete', count: 3)
+    expect(page).to have_selector('a.btn.btn-primary', text: 'sync', count: 3)
   end
 end
