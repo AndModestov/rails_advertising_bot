@@ -1,4 +1,6 @@
 class MyTarget::Account < ApplicationRecord
+  has_many :pads, foreign_key: 'account_id', class_name: 'MyTarget::Pad', dependent: :destroy
+
   validates :name, :link, :password, :login, presence: true
   validates :password, length: { minimum: 6 }
   validates :login, format: /@/

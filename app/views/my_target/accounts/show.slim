@@ -11,6 +11,9 @@ table.table
   tbody
     = render 'account_data', account: @account
     
+- @account.pads.each do |pad|
+  = render 'my_target/pads/pad', pad: pad
+    
 a.new-account-link.btn.btn-primary Edit Account
 br
 = render 'form', account: @account, method: 'patch'

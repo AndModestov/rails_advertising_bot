@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716154634) do
+ActiveRecord::Schema.define(version: 20170717082244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,25 @@ ActiveRecord::Schema.define(version: 20170716154634) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "status",     default: 0
+  end
+
+  create_table "my_target_addunits", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "service_id"
+    t.integer  "pad_id"
+    t.integer  "format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pad_id"], name: "index_my_target_addunits_on_pad_id", using: :btree
+  end
+
+  create_table "my_target_pads", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "service_id"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_my_target_pads_on_account_id", using: :btree
   end
 
 end

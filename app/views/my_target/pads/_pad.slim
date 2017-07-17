@@ -1,0 +1,4 @@
+h4 id="pad-#{pad.id}" = "#{pad.name}:#{pad.service_id}"
+
+- pad.addunits.each do |addunit|
+  = render 'my_target/addunits/addunit', addunit: addunit

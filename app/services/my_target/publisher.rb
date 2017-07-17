@@ -12,8 +12,6 @@ class MyTarget::Publisher
     @password = password
     @pad_url = pad_url
     @cookies = {}
-
-    MyTarget::Logger.debug 'Initialize', "Publisher initialized with #{@user_login}:#{@password}"
   end
 
   def authenticate
@@ -48,7 +46,9 @@ class MyTarget::Publisher
     result = Request.run url, { method: :post, body: body, headers: headers }
     raise E::RequestError if result[:status] != 200
 
-    parse_pads result[:body]
+    pads = parse_pads result[:body]
+    MyTarget::Logger.debug 'CreatePad', pads
+    pads
   end
 
 
@@ -169,9 +169,8 @@ class MyTarget::Publisher
     addunits = pad_data['pads'].collect do |addunit|
       { name: addunit['description'], service_id: addunit['id'], format: addunit['format_id'] }
     end
-    result = { app: app, addunits: addunits }
-    MyTarget::Logger.debug 'CreatePad', result
-    result
+
+    { app: app, addunits: addunits }
   end
 
   def add_cookies data={}
